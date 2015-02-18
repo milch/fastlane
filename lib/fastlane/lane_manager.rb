@@ -1,5 +1,11 @@
 module Fastlane
   class LaneManager
+
+    def self.lanes() 
+      ff = Fastlane::FastFile.new(File.join(Fastlane::FastlaneFolder.path, 'Fastfile'))
+      ff.runner.available_lanes
+    end
+
     def self.cruise_lanes(lanes)
       raise 'lanes must be an array' unless lanes.is_a?(Array)
       ff = Fastlane::FastFile.new(File.join(Fastlane::FastlaneFolder.path, 'Fastfile'))

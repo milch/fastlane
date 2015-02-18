@@ -35,6 +35,19 @@ class FastlaneApplication
       end
     end
 
+    command :lanes do |c|
+      c.syntax = "fastlane lanes"
+      c.description = "List all available lanes"
+
+      c.action do |args, _options|
+        if Fastlane::FastlaneFolder.path
+          puts Fastlane::LaneManager.lanes
+        else
+          puts "No lanes available"
+        end
+      end
+    end
+
     command :init do |c|
       c.syntax = 'fastlane init'
       c.description = 'Helps you setting up fastlane based on your existing tools.'
