@@ -1,7 +1,7 @@
 module Fastlane
   class LaneManager
 
-    def self.lanes() 
+    def self.lanes 
       ff = Fastlane::FastFile.new(File.join(Fastlane::FastlaneFolder.path, 'Fastfile'))
       ff.runner.available_lanes
     end
