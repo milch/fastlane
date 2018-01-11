@@ -27,30 +27,23 @@ end
 
 task(:generate_team_table) do
   require 'json'
-  content = ["<table>"]
+  content = ["<ul id='team-table' style='display:flex; flex-wrap:wrap; flex-direction:row; list-style:none;' max-width='100%'>"]
 
   contributors = JSON.parse(File.read("team.json"))
-  counter = 0
-  number_of_rows = 5
-
   contributors.keys.shuffle.each do |github_user|
     user_content = contributors[github_user]
 
-    content << "<tr>" if counter % number_of_rows == 0
-    content << "<td>"
+    content << "<li style='padding: 6px; border: 1px solid #dfe2e5;'>"
     content << "<img src='https://github.com/#{github_user}.png?size=200' width=140>"
     content << "<h4 align='center'><a href='https://twitter.com/#{user_content['twitter']}'>#{user_content['name']}</a></h4>"
     # content << "<p align='center'>#{user_content['slogan']}</p>" if user_content['slogan'].to_s.length > 0
 
-    content << "</td>"
-    content << "</tr>" if counter % number_of_rows == number_of_rows - 1
-
-    counter += 1
+    content << "</li>"
   end
-  content << "</table>"
+  content << "</ul>"
 
   readme = File.read("README.md")
-  readme.gsub!(%r{\<table\>.*\<\/table\>}m, content.join("\n"))
+  readme.gsub!(%r{\<ul id='team-table'.*\<\/ul\>}m, content.join("\n"))
   File.write("README.md", readme)
   puts("All done")
 end
